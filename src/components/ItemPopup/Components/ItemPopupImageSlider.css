@@ -1,0 +1,33 @@
+.itemPopupImage .slick-slide {
+    width: 100px;
+    cursor: pointer;
+    min-height: 44px;
+}
+
+.itemPopupImage .slick-slide div {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.itemPopupImage .slick-next {
+    display: block !important;
+    background-image: url('https://img.icons8.com/external-dreamstale-lineal-dreamstale/64/null/external-right-arrow-arrows-dreamstale-lineal-dreamstale-2.png') !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+.itemPopupImage .slick-prev {
+    display: block !important;
+    background-image: url('https://img.icons8.com/external-dreamstale-lineal-dreamstale/64/null/external-left-arrow-arrows-dreamstale-lineal-dreamstale-15.png') !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+.itemPopupImage .slick-next::before, .itemPopupImage .slick-prev::before {
+    content: none !important;
+}
+
+.itemPopupImage .slick-slider {
+    width: 90%;
+    margin-top: 30px;
+}

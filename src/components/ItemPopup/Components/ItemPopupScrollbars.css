@@ -1,0 +1,15 @@
+.itemPopupScrollbars .os-scrollbar-handle {
+    background-color: #000;
+}
+
+.itemPopupScrollbars {
+    height: 3px;
+}
+
+.itemPopupScrollbars .os-scrollbar-track {
+    background-color: #ededed;
+}
+
+[data-overlayscrollbars~=host] {
+    width: 100%;
+}

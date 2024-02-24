@@ -1,0 +1,65 @@
+.search {
+    width: 90%;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+}
+
+.searchBlock {
+    width: 100%;
+    max-width: 700px;
+    height: 60px;
+    box-sizing: border-box;
+    border: 2px solid #000;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search:focus, .search:active, .searchButton:focus, .searchButton:active {
+    outline: none;
+}
+
+.searchButton {
+    width: 30px;
+    height: 30px;
+    border: none;
+    margin-left: 50px;
+    background-image: url('./assets/loupe.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.container {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.categoryTitle {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000;
+    align-self: flex-start;
+    margin-top: 50px;
+}
+
+@media all and (max-width: 700px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

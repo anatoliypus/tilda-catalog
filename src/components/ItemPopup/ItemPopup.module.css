@@ -1,0 +1,351 @@
+.itemPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.99);
+    padding: 70px 100px 50px 100px;
+    box-sizing: border-box;
+    transition: opacity 0.1s, visibility 0.1s;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 100%;
+    z-index: 999;
+}
+
+.ItemPopupCenter {
+  align-items: center;
+  justify-content: center !important;
+  height: 100%;
+}
+
+.split {
+    display: flex;
+    margin-top: 70px;
+}
+
+.itemPopupHidden {
+    transition: opacity 0.1s, visibility 0.1s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.itemPopupImage {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sliderSingleImage {
+  height: 90px;
+  object-position: center center;
+  object-fit: cover;
+}
+
+.itemPopupImagesMainImage {
+    width: 100%;
+    min-height: 200px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 500px;
+    cursor: zoom-in;
+}
+
+.itemPopupMainBlock {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+}
+
+.itemPopupAddToCart {
+    width: 150px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 30px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.itemPopupAddToCart:hover {
+  background-color: #313131;
+  transition: background 0.2s;
+}
+
+.itemPopupAddToCartInactive {
+  background-color: #646464;
+  cursor: not-allowed;
+  color: #e6e6e6;
+}
+
+.itemPopupAddToCartInactive:hover {
+  transition: none;
+  background-color: #646464;
+}
+
+.itemPopupHeading {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000;
+}
+
+.itemPopupPrice {
+    font-size: 17px;
+    font-weight: 400;
+    color: #000;
+    margin-top: 20px;
+}
+
+.itemPopupClose {
+    color: #464646;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.itemPopupArticle {
+  margin-top: 30px;
+  font-weight: 400;
+  font-size: 15px;
+  color: #000;
+}
+
+.itemPopupSizesHeading {
+    margin-top: 40px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #808080;
+}
+
+.itemPopupSizes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    min-height: 50px;
+    align-items: center;
+}
+
+.itemPopupSize {
+    padding: 10px;
+    background: none;
+    border: 1px solid #808080;
+    font-size: 15px;
+    color: #808080;
+    font-weight: 400;
+    margin-right: 10px;
+    border-radius: 5px;
+    transition: background 0.2s;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.itemPopupSizeChoosed, .itemPopupSizeChoosed:hover {
+    background-color: #000 !important;
+    border: 1px solid #fff !important;
+    transition: none !important;
+}
+
+.itemPopupSize:hover {
+    background-color: #f2f2f2;
+    transition: background 0.2s;
+}
+
+.itemPopupGallery {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.itemPopupGalleryChosen {
+    border: 2px solid #000;
+}
+
+.itemPopupGalleryNotChosen {
+    border: 2px solid #fff;
+}
+
+.descriptionBlock {
+    margin-top: 50px;
+}
+
+.description {
+    color: #000;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.loader {
+  display: inline-block;
+  position: relative;
+  width: 50px;
+}
+
+.loader div {
+  position: absolute;
+  top: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #e7e7e7;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.loader div:nth-child(1) {
+  left: 8px;
+  animation: loader1 0.6s infinite;
+}
+.loader div:nth-child(2) {
+  left: 8px;
+  animation: loader2 0.6s infinite;
+}
+.loader div:nth-child(3) {
+  left: 32px;
+  animation: loader2 0.6s infinite;
+}
+.loader div:nth-child(4) {
+  left: 56px;
+  animation: loader3 0.6s infinite;
+}
+@keyframes loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+.mainLoader {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.mainLoader div {
+  position: absolute;
+  border: 4px solid #000;
+  opacity: 1;
+  border-radius: 50%;
+  animation: mainLoader 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.mainLoader div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes mainLoader {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
+}
+
+@media all and (max-width: 980px) and (min-width: 701px) {
+    .split {
+        margin-top: 110px;
+    }
+    
+    .itemPopupClose {
+      top: 120px;
+      left: 50px;
+    }
+
+    .itemPopup {
+        padding: 70px 50px 50px 50px;
+    }
+}
+
+
+@media all and (max-width: 700px) {
+    .split {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .sliderSingleImage {
+      height: 70px;
+    }
+
+    .itemPopupImagesMainImage {
+      height: 350px;
+    }
+    
+    .itemPopupMainBlock {
+        width: 100%;
+        padding-left: 0;
+        margin-top: 100px;
+    }
+
+    .itemPopupImage {
+        width: 100%;
+        margin-top: 90px;
+    }
+
+    .itemPopup {
+        justify-content: flex-start;
+        padding: 20px;
+        padding-bottom: 50px;
+    }
+
+    .itemPopupClose {
+        left: 20px;
+        top: 60px;
+    }
+
+    .itemPopupMainBlock {
+        margin-top: 40px;
+    }
+}
