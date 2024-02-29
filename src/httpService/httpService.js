@@ -24,8 +24,23 @@ async function makeRequest(url) {
 }
 
 export async function searchItems(key, page, gender) {
+    let category = ''
+    eval(`
+        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
+    `)
+
+    let pageSize = ''
+    eval(`
+        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "pageSize" in CATALOG_PARAMS) pageSize = CATALOG_PARAMS.pageSize
+    `)
+
+    let brand = ''
+    eval(`
+        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "brand" in CATALOG_PARAMS) brand = CATALOG_PARAMS.brand
+    `)
+
     const data = await makeRequest(
-        `${baseUrl}/search?key=${key}&page=${page}&gender=${gender}`
+        `${baseUrl}/search?key=${key}&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category}&brand=${brand}`
     );
     return data.products;
 }
