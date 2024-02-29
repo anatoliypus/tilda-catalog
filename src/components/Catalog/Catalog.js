@@ -49,6 +49,11 @@ function Catalog() {
     if (CATALOG_PARAMS && "search" in CATALOG_PARAMS) shouldShowSearch = CATALOG_PARAMS.search
   `)
 
+  let shouldShowFilters = true
+  eval(`
+    if (CATALOG_PARAMS && "filters" in CATALOG_PARAMS) shouldShowFilters = CATALOG_PARAMS.filters
+  `)
+
   return (
     <div
       ref={loadingBlockRef}
@@ -61,13 +66,14 @@ function Catalog() {
         }}
         searchKey={searchKey}
       />}
+      { shouldShowFilters && 
       <Genders
         gender={gender}
         setGender={(str) => {
           setReachedPage(0);
           setGender(str);
         }}
-      />
+      />}
       {shouldShowLoading && (
         <div className={styles.catalog}>
           <p className={styles.catalogLoading}>Загрузка...</p>

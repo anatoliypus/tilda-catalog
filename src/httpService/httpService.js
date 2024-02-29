@@ -31,8 +31,17 @@ export async function searchItems(key, page, gender) {
 }
 
 export async function getCatalog(page, gender) {
+    let category = ''
+    eval(`
+        if (CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
+    `)
+
+    let pageSize = ''
+    eval(`
+        if (CATALOG_PARAMS && "pageSize" in CATALOG_PARAMS) pageSize = CATALOG_PARAMS.pageSize
+    `)
     const data = await makeRequest(
-        `${baseUrl}/catalog?&page=${page}&gender=${gender}`
+        `${baseUrl}/catalog?&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category}`
     );
     return data.products;
 }
