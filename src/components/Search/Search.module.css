@@ -54,3 +54,10 @@
     align-self: flex-start;
     margin-top: 50px;
 }
+
+@media screen and (max-width: 960px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
