@@ -21,6 +21,7 @@ function useUpdateCatalog(
           } else {
             setItems(items.concat(data));
           }
+          console.log(1)
           setLoading(false);
           setReachedPageIsLast(false);
         }
@@ -32,6 +33,7 @@ function useUpdateCatalog(
           } else {
             setItems(items.concat(data));
           }
+          console.log(2)
           setLoading(false);
           setReachedPageIsLast(false);
         }
