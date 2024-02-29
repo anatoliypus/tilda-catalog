@@ -16,7 +16,7 @@ function useUpdateCatalog(
       if (searchKey) {
         const data = await searchItems(searchKey, reachedPage, gender);
         if (data) {
-          if (reachedPage === 0) {
+          if (reachedPage === 1) {
             setItems(data);
           } else {
             setItems(items.concat(data));
@@ -27,7 +27,7 @@ function useUpdateCatalog(
       } else {
         const data = await getCatalog(reachedPage, gender);
         if (data) {
-          if (reachedPage === 0) {
+          if (reachedPage === 1) {
             setItems(data);
           } else {
             setItems(items.concat(data));
