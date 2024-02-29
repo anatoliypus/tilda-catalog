@@ -57,7 +57,7 @@ function Catalog() {
   return (
     <div
       ref={loadingBlockRef}
-      style={{ display: "flex", width: "100%", flexDirection: "column" }}
+      className={styles.catalogMainBlock}
     >
       {shouldShowSearch && <Search
         setSearchKey={(key) => {

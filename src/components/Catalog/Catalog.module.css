@@ -4,6 +4,28 @@
     font-family: 'TildaSans', 'Tilda Sans', 'Arial', 'sans-serif';
 }
 
+.catalogMainBlock {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 960px) {
+    .catalogMainBlock {
+        max-width: 640px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .catalogMainBlock {
+        max-width: 960px;
+        padding: 0;
+    }
+}
+
 .catalogGenderBlock {
     width: 100%;
     max-width: 400px;
