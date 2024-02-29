@@ -62,7 +62,7 @@ function Catalog() {
       {shouldShowSearch && <Search
         setSearchKey={(key) => {
           setSearchKey(key);
-          setReachedPage(0);
+          setReachedPage(1);
         }}
         searchKey={searchKey}
       />}
@@ -70,7 +70,7 @@ function Catalog() {
       <Genders
         gender={gender}
         setGender={(str) => {
-          setReachedPage(0);
+          setReachedPage(1);
           setGender(str);
         }}
       />}
