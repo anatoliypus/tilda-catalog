@@ -46,12 +46,12 @@ function Catalog() {
 
   let shouldShowSearch = true
   eval(`
-    if (CATALOG_PARAMS && "search" in CATALOG_PARAMS) shouldShowSearch = CATALOG_PARAMS.search
+    if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "search" in CATALOG_PARAMS) shouldShowSearch = CATALOG_PARAMS.search
   `)
 
   let shouldShowFilters = true
   eval(`
-    if (CATALOG_PARAMS && "filters" in CATALOG_PARAMS) shouldShowFilters = CATALOG_PARAMS.filters
+    if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "filters" in CATALOG_PARAMS) shouldShowFilters = CATALOG_PARAMS.filters
   `)
 
   return (
