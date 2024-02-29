@@ -19,7 +19,7 @@
     }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1200px) and (min-width: 961px) {
     .catalogMainBlock {
         max-width: 960px;
         padding: 0;
