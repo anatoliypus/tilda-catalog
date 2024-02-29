@@ -44,18 +44,23 @@ function Catalog() {
   const shouldShowLoading = loading && reachedPage === 0;
   useSetLoadingHeight(shouldShowLoading, loadingBlockRef);
 
+  let shouldShowSearch = true
+  eval(`
+    if (CATALOG_PARAMS && "search" in CATALOG_PARAMS) shouldShowSearch = CATALOG_PARAMS.search
+  `)
+
   return (
     <div
       ref={loadingBlockRef}
       style={{ display: "flex", width: "100%", flexDirection: "column" }}
     >
-      <Search
+      {shouldShowSearch && <Search
         setSearchKey={(key) => {
           setSearchKey(key);
           setReachedPage(0);
         }}
         searchKey={searchKey}
-      />
+      />}
       <Genders
         gender={gender}
         setGender={(str) => {
