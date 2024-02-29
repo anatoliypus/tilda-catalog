@@ -40,8 +40,14 @@ export async function getCatalog(page, gender) {
     eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "pageSize" in CATALOG_PARAMS) pageSize = CATALOG_PARAMS.pageSize
     `)
+
+    let brand = ''
+    eval(`
+        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "brand" in CATALOG_PARAMS) brand = CATALOG_PARAMS.brand
+    `)
+
     const data = await makeRequest(
-        `${baseUrl}/catalog?&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category}`
+        `${baseUrl}/catalog?&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category}&brand=${brand}`
     );
     return data.products;
 }
