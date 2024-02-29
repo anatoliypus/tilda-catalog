@@ -41,7 +41,7 @@ function Catalog() {
     }
   }, []);
 
-  const shouldShowLoading = loading && reachedPage === 0;
+  const shouldShowLoading = loading && reachedPage === 1;
   useSetLoadingHeight(shouldShowLoading, loadingBlockRef);
 
   let shouldShowSearch = true
@@ -53,9 +53,6 @@ function Catalog() {
   eval(`
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "filters" in CATALOG_PARAMS) shouldShowFilters = CATALOG_PARAMS.filters
   `)
-
-  console.log(loading)
-  console.log(shouldShowLoading)
 
   return (
     <div
