@@ -54,6 +54,9 @@ function Catalog() {
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "filters" in CATALOG_PARAMS) shouldShowFilters = CATALOG_PARAMS.filters
   `)
 
+  console.log(loading)
+  console.log(shouldShowLoading)
+
   return (
     <div
       ref={loadingBlockRef}
