@@ -17,7 +17,6 @@ function mapSizeName(name) {
 
 function ItemPopupSizeTable({ sizeTable }) {
   if (!sizeTable) return null;
-  console.log(sizeTable)
 
   return (
     <div className={styles.sizeTable}>

@@ -40,7 +40,6 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
 
   useEffect(() => {
     if (!hidden && data && product && loading) {
-      console.log(data.categoryId)
       if (!product.title) {
         product.title = data.title;
       }
