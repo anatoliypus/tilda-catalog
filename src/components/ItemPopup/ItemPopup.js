@@ -146,7 +146,7 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
           <p className={styles.description}>{data.description}</p>
         )}
       </div>
-      {/* <ItemPopupSizeTable sizeTable={data.sizes}/> */}
+      <ItemPopupSizeTable sizeTable={data.sizes} />
       {/* <ItemPopupRelatives relatives={data ? data.relatedProducts : null} onClick={(product) => {
         setProduct(product)
         setPriceValue(defaultPrice)

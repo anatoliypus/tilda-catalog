@@ -2,8 +2,22 @@ import styles from "./ItemPopupSizeTable.module.css";
 import '../ItemPopupScrollbars.css'
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 
+function mapSizeName(name) {
+  const mappings = {
+    "适合脚长": "Внутренняя длина",
+    "欧码EU": "EU",
+    "US美码": "US",
+    "UK英码": "UK",
+    "内长（MM）": "Внутренняя длина (мм)",
+    "适合脚长": "Длина стопы"
+  }
+  if (mappings[name]) return mappings[name]
+  return name.split('').filter(char => /[a-zA-Z]/.test(char)).join('')
+}
+
 function ItemPopupSizeTable({ sizeTable }) {
   if (!sizeTable) return null;
+  console.log(sizeTable)
 
   return (
     <div className={styles.sizeTable}>
@@ -25,8 +39,8 @@ function ItemPopupSizeTable({ sizeTable }) {
               {sizeTable.map((size, index) => {
                 return (
                   <tr key={index}>
-                    <td>{size.sizeKey}</td>
-                    {size.sizeValue.split(",").map((sizeValue, index) => {
+                    <td>{mapSizeName(size.name)}</td>
+                    {size.value.split(size.delimiter).map((sizeValue, index) => {
                       return <td key={index}>{sizeValue}</td>;
                     })}
                   </tr>
