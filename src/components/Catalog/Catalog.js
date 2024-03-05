@@ -22,7 +22,6 @@ function Catalog() {
     const [gender, setGender] = useState(genders.all);
     const [categories, setCategories] = useState([]);
     const [choosedCategory, setChoosedCategory] = useState(null);
-    const [toggledCategories, setToggledCategories] = useState([]);
     const categoriesRef = useRef(null);
 
     useUpdateCatalog(
@@ -37,10 +36,7 @@ function Catalog() {
         categories,
         setCategories,
         choosedCategory,
-        setChoosedCategory,
-        toggledCategories,
-        setToggledCategories,
-        categoriesRef
+        setChoosedCategory
     );
 
     useEffect(() => {
@@ -54,6 +50,19 @@ function Catalog() {
             });
         }
     }, []);
+
+    useEffect(() => {
+      console.log('triggered')
+        document
+            .querySelectorAll(`.${styles.catalogCategories}`)
+            .forEach((v) => {
+                v.scrollLeft = 0;
+                if (v.querySelector(`.${styles.catalogCategories}`))
+                    v.style.overflowX = "hidden";
+                else v.style.overflowX = "scroll";
+                console.log(v);
+            });
+    }, [categories]);
 
     const shouldShowLoading = loading && reachedPage === 1;
     useSetLoadingHeight(shouldShowLoading, loadingBlockRef);
@@ -103,15 +112,17 @@ function Catalog() {
             <div className={styles.catalog}>
                 {shouldShowCategoriesFilter && (
                     <Categories
+                        level={0}
                         categories={categories}
                         categoriesRef={categoriesRef}
-                        toggledCategories={toggledCategories}
-                        setToggledCategories={setToggledCategories}
                         setReachedPage={setReachedPage}
                         setChoosedCategory={setChoosedCategory}
                     />
                 )}
-                <div style={{width: shouldShowCategoriesFilter ? '' : '100%'}} className={styles.catalogItemsBlock}>
+                <div
+                    style={{ width: shouldShowCategoriesFilter ? "" : "100%" }}
+                    className={styles.catalogItemsBlock}
+                >
                     {shouldShowLoading && (
                         <div className={styles.catalog}>
                             <p className={styles.catalogLoading}>Загрузка...</p>

@@ -26,93 +26,87 @@ function useUpdateCatalog(
     setCategories,
     choosedCategory,
     setChoosedCategory,
-    toggledCategories,
-    setToggledCategories,
-    categoriesRef
 ) {
-    useEffect(() => {
-        const func = async () => {
-            setLoading(true);
-            if (searchKey) {
-                const data = await searchItems(searchKey, reachedPage, gender);
-                if (data) {
-                    if (reachedPage === 1) {
-                        setItems(data);
-                    } else {
-                        setItems(items.concat(data));
-                    }
-                    setLoading(false);
-                    setReachedPageIsLast(false);
+    const mainHandler = async () => {
+        setLoading(true);
+        if (searchKey) {
+            const data = await searchItems(
+                searchKey,
+                reachedPage,
+                gender,
+                choosedCategory
+            );
+            if (data) {
+                if (reachedPage === 1) {
+                    setItems(data.products);
+                } else {
+                    setItems(items.concat(data.products));
                 }
-            } else {
-                const data = await getCatalog(
-                    reachedPage,
-                    gender,
-                    choosedCategory
-                );
-                if (data) {
-                    if (reachedPage === 1) {
-                        setItems(data.products);
-                        setCategories(data.categories);
-                    } else {
-                        setItems(items.concat(data.products));
-                    }
-                    setLoading(false);
-                    setReachedPageIsLast(false);
-                }
+                setLoading(false);
+                setReachedPageIsLast(false);
             }
-        };
-        func();
+        } else {
+            const data = await getCatalog(reachedPage, gender, choosedCategory);
+            if (data) {
+                if (reachedPage === 1) {
+                    setItems(data.products);
+                    setCategories(data.categories);
+                } else {
+                    setItems(items.concat(data.products));
+                }
+                setLoading(false);
+                setReachedPageIsLast(false);
+            }
+        }
+    };
+    useEffect(() => {
+        mainHandler();
     }, [reachedPage, searchKey, gender]);
 
     useEffect(() => {
         const func = async () => {
+            if (!choosedCategory) {
+                mainHandler()
+                return
+            }
             if (
                 !(
+                    choosedCategory &&
                     items &&
-                    categories &&
-                    toggledCategories &&
-                    toggledCategories.length
+                    categories
                 )
             )
                 return;
             setLoading(true);
+            let data;
             if (searchKey) {
-                const data = await searchItems(searchKey, reachedPage, gender);
-                if (data) {
-                    if (reachedPage === 1) {
-                        setItems(data);
-                    } else {
-                        setItems(items.concat(data));
-                    }
-                    setLoading(false);
-                    setReachedPageIsLast(false);
-                }
-            } else {
-                const data = await getCatalog(
+                data = await searchItems(
+                    searchKey,
                     reachedPage,
                     gender,
                     choosedCategory
                 );
-                if (data) {
-                    setItems(data.products);
+            } else {
+                data = await getCatalog(reachedPage, gender, choosedCategory);
+            }
+            if (data) {
+                setItems(data.products);
 
-                    if (data.categories && data.categories.length) {
-                        const choosedCategoryData = findNode(
-                            choosedCategory,
-                            categories
-                        );
-                        choosedCategoryData.children = data.categories;
-                        setCategories(categories)
-                    }
-
-                    setLoading(false);
-                    setReachedPageIsLast(false);
+                if (data.categories && data.categories.length) {
+                    const choosedCategoryData = findNode(
+                        choosedCategory,
+                        categories
+                    );
+                    choosedCategoryData.children = data.categories;
+                    setCategories(categories.map((v) => v));
                 }
+
+                setLoading(false);
+                setReachedPageIsLast(false);
             }
         };
         func();
-    }, [choosedCategory, toggledCategories]);
+    }, [choosedCategory]);
 
     useEffect(() => {
         let category = null;
