@@ -8,107 +8,144 @@ import genders from "./Components/Genders/gendersTypes";
 import LoadMore from "./Components/LoadMore";
 import useSetLoadingHeight from "./Hooks/useSetLoadingHeight";
 import useUpdateCatalog from "./Hooks/useUpdateCatalog";
+import Category from "./Components/Category";
+import Categories from "./Components/Categories";
 
 function Catalog() {
-  const [searchKey, setSearchKey] = useState(null);
-  const [items, setItems] = useState([]);
-  const [reachedPage, setReachedPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [reachedPageIsLast, setReachedPageIsLast] = useState(false);
-  const [choosedItem, setChoosedItem] = useState(null);
-  const loadingBlockRef = useRef(null);
-  const [gender, setGender] = useState(genders.all);
+    const [searchKey, setSearchKey] = useState(null);
+    const [items, setItems] = useState([]);
+    const [reachedPage, setReachedPage] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [reachedPageIsLast, setReachedPageIsLast] = useState(false);
+    const [choosedItem, setChoosedItem] = useState(null);
+    const loadingBlockRef = useRef(null);
+    const [gender, setGender] = useState(genders.all);
+    const [categories, setCategories] = useState([]);
+    const [choosedCategory, setChoosedCategory] = useState(null);
+    const [toggledCategories, setToggledCategories] = useState([]);
+    const categoriesRef = useRef(null);
 
-  useUpdateCatalog(
-    setLoading,
-    reachedPage,
-    setReachedPageIsLast,
-    setItems,
-    searchKey,
-    items,
-    gender
-  );
+    useUpdateCatalog(
+        setLoading,
+        reachedPage,
+        setReachedPageIsLast,
+        setReachedPage,
+        setItems,
+        searchKey,
+        items,
+        gender,
+        categories,
+        setCategories,
+        choosedCategory,
+        setChoosedCategory,
+        toggledCategories,
+        setToggledCategories,
+        categoriesRef
+    );
 
-  useEffect(() => {
-    const searchParams = new URL(window.location.href).searchParams;
-    const id = searchParams.get("productId");
-    if (id) {
-      setChoosedItem({
-        productId: id,
-        title: null,
-        img: null,
-      });
-    }
-  }, []);
+    useEffect(() => {
+        const searchParams = new URL(window.location.href).searchParams;
+        const id = searchParams.get("productId");
+        if (id) {
+            setChoosedItem({
+                productId: id,
+                title: null,
+                img: null,
+            });
+        }
+    }, []);
 
-  const shouldShowLoading = loading && reachedPage === 1;
-  useSetLoadingHeight(shouldShowLoading, loadingBlockRef);
+    const shouldShowLoading = loading && reachedPage === 1;
+    useSetLoadingHeight(shouldShowLoading, loadingBlockRef);
 
-  let shouldShowSearch = true
-  eval(`
+    let shouldShowSearch = true;
+    eval(`
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "search" in CATALOG_PARAMS) shouldShowSearch = CATALOG_PARAMS.search
-  `)
+  `);
 
-  let shouldShowFilters = true
-  eval(`
+    let shouldShowFilters = true;
+    eval(`
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "filters" in CATALOG_PARAMS) shouldShowFilters = CATALOG_PARAMS.filters
-  `)
+  `);
 
-  return (
-    <div
-      ref={loadingBlockRef}
-      className={styles.catalogMainBlock}
-    >
-      {shouldShowSearch && <Search
-        setSearchKey={(key) => {
-          setSearchKey(key);
-          setReachedPage(1);
-        }}
-        searchKey={searchKey}
-      />}
-      { shouldShowFilters && 
-      <Genders
-        gender={gender}
-        setGender={(str) => {
-          setReachedPage(1);
-          setGender(str);
-        }}
-      />}
-      {shouldShowLoading && (
-        <div className={styles.catalog}>
-          <p className={styles.catalogLoading}>Загрузка...</p>
+    return (
+        <div ref={loadingBlockRef} className={styles.catalogMainBlock}>
+            {shouldShowSearch && (
+                <Search
+                    setSearchKey={(key) => {
+                        setSearchKey(key);
+                        setReachedPage(1);
+                    }}
+                    searchKey={searchKey}
+                />
+            )}
+            {shouldShowFilters && (
+                <Genders
+                    gender={gender}
+                    setGender={(str) => {
+                        setReachedPage(1);
+                        setGender(str);
+                    }}
+                />
+            )}
+            <ItemPopup
+                product={choosedItem}
+                setProduct={setChoosedItem}
+                closePopup={() => {
+                    setChoosedItem(null);
+                }}
+                hidden={choosedItem == null}
+            />
+            <div className={styles.catalog}>
+                <Categories
+                    categories={categories}
+                    categoriesRef={categoriesRef}
+                    toggledCategories={toggledCategories}
+                    setToggledCategories={setToggledCategories}
+                    setReachedPage={setReachedPage}
+                    setChoosedCategory={setChoosedCategory}
+                />
+                <div className={styles.catalogItemsBlock}>
+                    {shouldShowLoading && (
+                        <div className={styles.catalog}>
+                            <p className={styles.catalogLoading}>Загрузка...</p>
+                        </div>
+                    )}
+                    {!shouldShowLoading && (
+                        <div className={styles.catalogItems}>
+                            {items.map((product, index) => {
+                                if (!product.title) return null;
+                                return (
+                                    <Item
+                                        key={index}
+                                        product={product}
+                                        setPopup={setChoosedItem}
+                                    />
+                                );
+                            })}
+                        </div>
+                    )}
+                    {!shouldShowLoading && (
+                        <LoadMore
+                            show={!reachedPageIsLast && items}
+                            inActive={loading && items.length}
+                            reachedPage={reachedPage}
+                            setReachedPage={setReachedPage}
+                        />
+                    )}
+                </div>
+            </div>
+
+            {/* {!shouldShowLoading && (
+                <LoadMore
+                    show={!reachedPageIsLast && items}
+                    inActive={loading && items.length}
+                    reachedPage={reachedPage}
+                    setReachedPage={setReachedPage}
+                />
+            )} */}
         </div>
-      )}
-      <ItemPopup
-        product={choosedItem}
-        setProduct={setChoosedItem}
-        closePopup={() => {
-          setChoosedItem(null);
-        }}
-        hidden={choosedItem == null}
-      />
-      {!shouldShowLoading && (
-        <div className={styles.catalog}>
-          <div className={styles.catalogItems}>
-            {items.map((product, index) => {
-              if (!product.title) return null;
-              return (
-                <Item key={index} product={product} setPopup={setChoosedItem} />
-              );
-            })}
-          </div>
-        </div>
-      )}
-      {!shouldShowLoading && (
-        <LoadMore
-          show={!reachedPageIsLast && items}
-          inActive={loading && items.length}
-          reachedPage={reachedPage}
-          setReachedPage={setReachedPage}
-        />
-      )}
-    </div>
-  );
+    );
 }
 
 export default Catalog;

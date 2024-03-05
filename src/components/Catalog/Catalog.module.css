@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'TildaSans', 'Tilda Sans', 'Arial', 'sans-serif';
+    font-family: "TildaSans", "Tilda Sans", "Arial", "sans-serif";
 }
 
 .catalogMainBlock {
@@ -11,7 +11,7 @@
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    padding-bottom: 40px
+    padding-bottom: 40px;
 }
 
 @media screen and (max-width: 960px) {
@@ -56,7 +56,6 @@
     box-sizing: border-box;
     padding-bottom: 30px;
     display: flex;
-    flex-direction: column;
 }
 
 .catalogLoading {
@@ -65,11 +64,64 @@
     font-weight: 400;
 }
 
+.catalogItemsBlock {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
 .catalogItems {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 50px;
+    height: fit-content;
+}
+
+.catalogCategories {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-right: 15px;
+}
+
+.catalogCategories .catalogCategories {
+    width: 100%;
+    padding-left: 15px;
+    box-sizing: border-box;
+    border-right: 0;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.catalogCategories .catalogCategories .categoryButton {
+    font-size: 16px;
+}
+
+.categoryButton {
+    background: none;
+    border: 0;
+    font-size: 20px;
+    color: #000;
+    text-align: left;
+    margin-bottom: 8px;
+    padding: 6px 25px 6px 7px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.nestedCategories {
+    padding-left: 10px;
+}
+
+.categoryButton:hover {
+    background-color: #f5f5f5;
+}
+
+.categoryButton.categoryButtonActive {
+    background-color: #000;
+    color: #fff;
 }
 
 .catalogNoScroll {
@@ -109,7 +161,8 @@
 }
 
 @media all and (max-width: 700px) {
-    .catalog, .catalogGenderBlock {
+    .catalog,
+    .catalogGenderBlock {
         padding-left: 20px;
         padding-right: 20px;
     }

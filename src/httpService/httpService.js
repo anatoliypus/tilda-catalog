@@ -45,12 +45,7 @@ export async function searchItems(key, page, gender) {
     return data.products;
 }
 
-export async function getCatalog(page, gender) {
-    let category = ''
-    eval(`
-        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
-    `)
-
+export async function getCatalog(page, gender, category) {
     let pageSize = ''
     eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "pageSize" in CATALOG_PARAMS) pageSize = CATALOG_PARAMS.pageSize
@@ -62,9 +57,9 @@ export async function getCatalog(page, gender) {
     `)
 
     const data = await makeRequest(
-        `${baseUrl}/catalog?&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category}&brand=${brand}`
+        `${baseUrl}/catalog?&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category ? category : ''}&brand=${brand}`
     );
-    return data.products;
+    return data;
 }
 
 export async function getProductInfo(id) {
