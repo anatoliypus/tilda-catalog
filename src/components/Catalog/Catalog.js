@@ -111,7 +111,7 @@ function Catalog() {
                         setChoosedCategory={setChoosedCategory}
                     />
                 )}
-                <div className={styles.catalogItemsBlock}>
+                <div style={{width: shouldShowCategoriesFilter ? '' : '100%'}} className={styles.catalogItemsBlock}>
                     {shouldShowLoading && (
                         <div className={styles.catalog}>
                             <p className={styles.catalogLoading}>Загрузка...</p>
