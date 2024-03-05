@@ -68,6 +68,10 @@ function Catalog() {
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "filters" in CATALOG_PARAMS) shouldShowFilters = CATALOG_PARAMS.filters
   `);
 
+    let shouldShowCategoriesFilter = true;
+    eval(`
+    if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "categoriesFilters" in CATALOG_PARAMS) shouldShowCategoriesFilter = CATALOG_PARAMS.categoriesFilters
+  `);
     return (
         <div ref={loadingBlockRef} className={styles.catalogMainBlock}>
             {shouldShowSearch && (
@@ -97,14 +101,16 @@ function Catalog() {
                 hidden={choosedItem == null}
             />
             <div className={styles.catalog}>
-                <Categories
-                    categories={categories}
-                    categoriesRef={categoriesRef}
-                    toggledCategories={toggledCategories}
-                    setToggledCategories={setToggledCategories}
-                    setReachedPage={setReachedPage}
-                    setChoosedCategory={setChoosedCategory}
-                />
+                {shouldShowCategoriesFilter && (
+                    <Categories
+                        categories={categories}
+                        categoriesRef={categoriesRef}
+                        toggledCategories={toggledCategories}
+                        setToggledCategories={setToggledCategories}
+                        setReachedPage={setReachedPage}
+                        setChoosedCategory={setChoosedCategory}
+                    />
+                )}
                 <div className={styles.catalogItemsBlock}>
                     {shouldShowLoading && (
                         <div className={styles.catalog}>
