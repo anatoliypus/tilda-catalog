@@ -113,7 +113,7 @@ function Catalog() {
                 }}
                 hidden={choosedItem == null}
             />
-            {choosedCategory != null && (
+            {shouldShowCategoriesFilter && choosedCategory != null && (
                 <button
                     onClick={() => {
                         setChoosedCategory(null);
