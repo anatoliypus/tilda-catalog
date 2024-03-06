@@ -4,36 +4,25 @@ import Categories from "./Categories";
 
 function Category({
     level,
-    id,
     categoriesRef,
     setReachedPage,
-    name,
     setChoosedCategory,
-    children,
     categories,
     setCategories,
+    node,
+    choosedCategory
 }) {
     return (
         <>
             <button
-                className={styles.categoryButton}
+                className={`${styles.categoryButton} ${node.id == choosedCategory ? styles.categoryButtonActive: ''}`}
                 data-level={level}
-                data-id={id}
+                data-id={node.id}
                 onClick={(e) => {
-                    if (
-                        e.target.classList.contains(styles.categoryButtonActive)
-                    ) {
-                        e.target.classList.remove(styles.categoryButtonActive);
+                    if (node.id == choosedCategory) {
                         setChoosedCategory(null);
                     } else {
                         if (categoriesRef && categoriesRef.current) {
-                            const el = document.querySelector(
-                                `.${styles.categoryButtonActive}`
-                            );
-                            el &&
-                                el.classList.remove(
-                                    styles.categoryButtonActive
-                                );
                             document
                                 .querySelectorAll(
                                     `[data-parentid]`
@@ -49,22 +38,22 @@ function Category({
                                 });
                         }
                         e.target.classList.add(styles.categoryButtonActive);
-                        setChoosedCategory(id);
+                        setChoosedCategory(node.id);
                     }
                     setReachedPage(1);
                 }}
             >
-                {name}
+                {node.name}
             </button>
-            {children && (
+            {node.children && (
                 <Categories
                     level={level + 1}
-                    parentId={id}
+                    parentId={node.id}
                     categories={categories}
                     categoriesRef={categoriesRef}
                     setReachedPage={setReachedPage}
                     setChoosedCategory={setChoosedCategory}
-                    children={children}
+                    children={node.children}
                     setCategories={setCategories}
                 />
             )}

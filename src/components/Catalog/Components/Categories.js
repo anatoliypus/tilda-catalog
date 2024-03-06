@@ -9,7 +9,8 @@ function Categories({
     parentId,
     level,
     setCategories,
-    children
+    children,
+    choosedCategory
 }) {
     return (
         <div ref={categoriesRef} className={styles.catalogCategories} data-parentid={parentId ? parentId : undefined}>
@@ -20,13 +21,12 @@ function Categories({
                             setCategories={setCategories}
                             key={index}
                             level={level}
-                            id={c.id}
                             categoriesRef={categoriesRef}
                             setReachedPage={setReachedPage}
-                            name={c.name}
+                            node={c}
                             setChoosedCategory={setChoosedCategory}
-                            children={c.children}
                             categories={categories}
+                            choosedCategory={choosedCategory}
                         />
                     );
                 })}

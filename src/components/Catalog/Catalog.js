@@ -9,6 +9,8 @@ import LoadMore from "./Components/LoadMore";
 import useSetLoadingHeight from "./Hooks/useSetLoadingHeight";
 import useUpdateCatalog from "./Hooks/useUpdateCatalog";
 import Categories from "./Components/Categories";
+import { findNode } from "../../utils/findNode";
+import { clearSubCategories } from "../../utils/clearSubCategories";
 
 function Catalog() {
     const [searchKey, setSearchKey] = useState(null);
@@ -87,6 +89,7 @@ function Catalog() {
                         setReachedPage(1);
                     }}
                     setChoosedCategory={(id) => {
+                        clearSubCategories(categories, setCategories);
                         setChoosedCategory(id);
                         setReachedPage(1);
                     }}
@@ -111,16 +114,20 @@ function Catalog() {
                 hidden={choosedItem == null}
             />
             {choosedCategory != null && (
-                <button onClick={() => {
-                    setChoosedCategory(null)
-                    setReachedPage(1)
-                }} className={styles.clearCategory}>
+                <button
+                    onClick={() => {
+                        setChoosedCategory(null);
+                        setReachedPage(1);
+                    }}
+                    className={styles.clearCategory}
+                >
                     Сброс категории
                 </button>
             )}
             <div className={styles.catalog}>
                 {shouldShowCategoriesFilter && (
                     <Categories
+                        choosedCategory={choosedCategory}
                         setCategories={setCategories}
                         level={0}
                         categories={categories}
