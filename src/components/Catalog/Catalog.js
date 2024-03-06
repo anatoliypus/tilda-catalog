@@ -80,6 +80,7 @@ function Catalog() {
     eval(`
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "categoriesFilters" in CATALOG_PARAMS) shouldShowCategoriesFilter = CATALOG_PARAMS.categoriesFilters
   `);
+  
     return (
         <div ref={loadingBlockRef} className={styles.catalogMainBlock}>
             {shouldShowSearch && (

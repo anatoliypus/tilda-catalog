@@ -114,7 +114,9 @@ function useUpdateCatalog(
         eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
     `);
-        if (category) setChoosedCategory(category);
+        if (category) {
+            setLoading(true)
+        }
     }, []);
 }
 

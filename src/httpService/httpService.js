@@ -24,12 +24,6 @@ async function makeRequest(url) {
 }
 
 export async function searchItems(key, page, gender, category='') {
-    let categoryParam = ''
-    eval(`
-        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) categoryParam = CATALOG_PARAMS.category
-    `)
-    if (categoryParam.length) category = categoryParam
-
     let pageSize = ''
     eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "pageSize" in CATALOG_PARAMS) pageSize = CATALOG_PARAMS.pageSize
