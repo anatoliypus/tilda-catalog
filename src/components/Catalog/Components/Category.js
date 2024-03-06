@@ -1,3 +1,4 @@
+import { findNode } from "../../../utils/findNode";
 import styles from "../Catalog.module.css";
 import Categories from "./Categories";
 
@@ -9,6 +10,8 @@ function Category({
     name,
     setChoosedCategory,
     children,
+    categories,
+    setCategories,
 }) {
     return (
         <>
@@ -31,14 +34,19 @@ function Category({
                                 el.classList.remove(
                                     styles.categoryButtonActive
                                 );
-                            if (el) {
-                                const elChilds = document.querySelector(
-                                    `[data-parentid='${el.dataset.id}']`
-                                );
-                                elChilds &&
-                                    !elChilds.contains(e.target) &&
-                                    elChilds.remove();
-                            }
+                            document
+                                .querySelectorAll(
+                                    `[data-parentid]`
+                                )
+                                .forEach((el) => {
+                                    const parentId = parseInt(el.dataset.parentid)
+                                    const node = findNode(parentId, categories)
+                                    if (node && el && !el.contains(e.target)) {
+                                        node.children = undefined
+                                        const newCategories = categories.map((v) => ({...v}))
+                                        setCategories(newCategories)
+                                    }
+                                });
                         }
                         e.target.classList.add(styles.categoryButtonActive);
                         setChoosedCategory(id);
@@ -52,10 +60,12 @@ function Category({
                 <Categories
                     level={level + 1}
                     parentId={id}
-                    categories={children}
+                    categories={categories}
                     categoriesRef={categoriesRef}
                     setReachedPage={setReachedPage}
                     setChoosedCategory={setChoosedCategory}
+                    children={children}
+                    setCategories={setCategories}
                 />
             )}
         </>

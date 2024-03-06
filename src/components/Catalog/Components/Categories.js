@@ -7,14 +7,17 @@ function Categories({
     setReachedPage,
     setChoosedCategory,
     parentId,
-    level
+    level,
+    setCategories,
+    children
 }) {
     return (
         <div ref={categoriesRef} className={styles.catalogCategories} data-parentid={parentId ? parentId : undefined}>
-            {categories &&
-                categories.map((c, index) => {
+            {children &&
+                children.map((c, index) => {
                     return (
                         <Category
+                            setCategories={setCategories}
                             key={index}
                             level={level}
                             id={c.id}
@@ -23,6 +26,7 @@ function Categories({
                             name={c.name}
                             setChoosedCategory={setChoosedCategory}
                             children={c.children}
+                            categories={categories}
                         />
                     );
                 })}

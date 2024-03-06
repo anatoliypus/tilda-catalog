@@ -1,17 +1,7 @@
 import { useEffect } from "react";
 import { searchItems, getCatalog } from "../../../httpService/httpService";
-import Category from "../Components/Category";
-import styles from "../Catalog.module.css";
+import { findNode } from "../../../utils/findNode";
 
-function findNode(id, array) {
-    for (const node of array) {
-        if (node.id === id) return node;
-        if (node.children) {
-            const child = findNode(id, node.children);
-            if (child) return child;
-        }
-    }
-}
 
 function useUpdateCatalog(
     setLoading,
@@ -50,7 +40,10 @@ function useUpdateCatalog(
             if (data) {
                 if (reachedPage === 1) {
                     setItems(data.products);
+                    
+                   if (!categories.length) {
                     setCategories(data.categories);
+                   }
                 } else {
                     setItems(items.concat(data.products));
                 }
@@ -66,6 +59,12 @@ function useUpdateCatalog(
     useEffect(() => {
         const func = async () => {
             if (!choosedCategory) {
+                setCategories(categories.map((v) => {
+                    return {
+                        ...v,
+                        children: undefined
+                    }
+                }))
                 mainHandler()
                 return
             }
@@ -91,14 +90,14 @@ function useUpdateCatalog(
             }
             if (data) {
                 setItems(data.products);
-
                 if (data.categories && data.categories.length) {
                     const choosedCategoryData = findNode(
                         choosedCategory,
                         categories
                     );
                     choosedCategoryData.children = data.categories;
-                    setCategories(categories.map((v) => v));
+                    const newCategories = categories.map((v) => ({...v}))
+                    setCategories(newCategories);
                 }
 
                 setLoading(false);

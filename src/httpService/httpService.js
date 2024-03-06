@@ -68,6 +68,11 @@ export async function getProductInfo(id) {
     return data;
 }
 
+export async function getPrice(priceYuan) {
+    const data = await makeRequest(`${baseUrl}/calculatePrice?price=${priceYuan}`);
+    return data;
+}
+
 export function useGetProductInfo(product, setData) {
     useEffect(() => {
         const handler = async () => {

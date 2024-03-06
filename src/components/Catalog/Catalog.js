@@ -8,7 +8,6 @@ import genders from "./Components/Genders/gendersTypes";
 import LoadMore from "./Components/LoadMore";
 import useSetLoadingHeight from "./Hooks/useSetLoadingHeight";
 import useUpdateCatalog from "./Hooks/useUpdateCatalog";
-import Category from "./Components/Category";
 import Categories from "./Components/Categories";
 
 function Catalog() {
@@ -52,7 +51,6 @@ function Catalog() {
     }, []);
 
     useEffect(() => {
-      console.log('triggered')
         document
             .querySelectorAll(`.${styles.catalogCategories}`)
             .forEach((v) => {
@@ -60,7 +58,6 @@ function Catalog() {
                 if (v.querySelector(`.${styles.catalogCategories}`))
                     v.style.overflowX = "hidden";
                 else v.style.overflowX = "scroll";
-                console.log(v);
             });
     }, [categories]);
 
@@ -112,8 +109,10 @@ function Catalog() {
             <div className={styles.catalog}>
                 {shouldShowCategoriesFilter && (
                     <Categories
+                        setCategories={setCategories}
                         level={0}
                         categories={categories}
+                        children={categories}
                         categoriesRef={categoriesRef}
                         setReachedPage={setReachedPage}
                         setChoosedCategory={setChoosedCategory}
