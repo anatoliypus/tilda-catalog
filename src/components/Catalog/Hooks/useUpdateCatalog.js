@@ -101,7 +101,7 @@ function useUpdateCatalog(
                     choosedCategory
                 );
             } else {
-                data = await getCatalog(reachedPage, gender, choosedCategory);
+                data = await getCatalog(reachedPage, gender, choosedCategory, shouldShowCategoriesFilter);
             }
             if (data) {
                 setItems(data.products);
