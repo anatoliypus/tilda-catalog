@@ -17,7 +17,19 @@ function useUpdateCatalog(
     choosedCategory,
     setChoosedCategory,
 ) {
+    useEffect(() => {
+        let category = null;
+        eval(`
+        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
+    `);
+        if (category) {
+            setLoading(true)
+            setChoosedCategory(category);
+        }
+    }, []);
+    
     const mainHandler = async () => {
+        if (choosedCategory) return
         setLoading(true);
         if (searchKey) {
             const data = await searchItems(
@@ -109,16 +121,6 @@ function useUpdateCatalog(
         func();
     }, [choosedCategory]);
 
-    useEffect(() => {
-        let category = null;
-        eval(`
-        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
-    `);
-        if (category) {
-            setLoading(true)
-            setChoosedCategory(category);
-        }
-    }, []);
 }
 
 export default useUpdateCatalog;
