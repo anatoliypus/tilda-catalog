@@ -95,9 +95,11 @@ function useUpdateCatalog(
                         choosedCategory,
                         categories
                     );
-                    choosedCategoryData.children = data.categories;
-                    const newCategories = categories.map((v) => ({...v}))
-                    setCategories(newCategories);
+                    if (choosedCategoryData) {
+                        choosedCategoryData.children = data.categories;
+                        const newCategories = categories.map((v) => ({...v}))
+                        setCategories(newCategories);
+                    }
                 }
 
                 setLoading(false);
