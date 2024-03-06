@@ -116,6 +116,7 @@ function useUpdateCatalog(
     `);
         if (category) {
             setLoading(true)
+            setChoosedCategory(category);
         }
     }, []);
 }
