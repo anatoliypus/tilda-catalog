@@ -17,19 +17,17 @@ function useUpdateCatalog(
     choosedCategory,
     setChoosedCategory,
 ) {
-    useEffect(() => {
+    
+    const mainHandler = async () => {
         let category = null;
         eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
     `);
         if (category) {
-            setLoading(true)
             setChoosedCategory(category);
+            return
         }
-    }, []);
-    
-    const mainHandler = async () => {
-        if (choosedCategory) return
+
         setLoading(true);
         if (searchKey) {
             const data = await searchItems(
@@ -65,6 +63,7 @@ function useUpdateCatalog(
         }
     };
     useEffect(() => {
+        if (choosedCategory) return
         mainHandler();
     }, [reachedPage, searchKey, gender]);
 
