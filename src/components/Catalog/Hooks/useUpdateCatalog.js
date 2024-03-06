@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { searchItems, getCatalog } from "../../../httpService/httpService";
 import { findNode } from "../../../utils/findNode";
+import genders from "../Components/Genders/gendersTypes";
 
 function useUpdateCatalog(
     setLoading,
@@ -26,6 +27,8 @@ function useUpdateCatalog(
             if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
             `);
             if (category) {
+                const data = await getCatalog(reachedPage, genders.all);
+                setCategories(data.categories);
                 setChoosedCategory(category);
                 return;
             }
@@ -109,8 +112,6 @@ function useUpdateCatalog(
                         const newCategories = categories.map((v) => ({ ...v }));
                         setCategories(newCategories);
                     }
-                } else if (data.categories && data.categories.length == 0) {
-                    setCategories(data.categories)
                 }
 
                 setLoading(false);
