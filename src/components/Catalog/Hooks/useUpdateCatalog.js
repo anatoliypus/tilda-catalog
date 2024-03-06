@@ -27,9 +27,11 @@ function useUpdateCatalog(
             eval(`
             if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
             `);
-            if (category && shouldShowCategoriesFilter) {
-                const data = await getCatalog(reachedPage, genders.all);
-                setCategories(data.categories);
+            if (category) {
+                if (shouldShowCategoriesFilter) {
+                    const data = await getCatalog(reachedPage, genders.all);
+                    setCategories(data.categories);
+                }
                 setChoosedCategory(category);
                 return;
             }
