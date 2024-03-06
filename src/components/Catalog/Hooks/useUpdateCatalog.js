@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { searchItems, getCatalog } from "../../../httpService/httpService";
 import { findNode } from "../../../utils/findNode";
-
 
 function useUpdateCatalog(
     setLoading,
@@ -15,17 +14,21 @@ function useUpdateCatalog(
     categories,
     setCategories,
     choosedCategory,
-    setChoosedCategory,
+    setChoosedCategory
 ) {
-    
+    let [checkedVars, setCheckedVars] = useState(false);
+
     const mainHandler = async () => {
-        let category = null;
-        eval(`
-        if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
-    `);
-        if (category) {
-            setChoosedCategory(category);
-            return
+        if (!checkedVars) {
+            setCheckedVars(true);
+            let category = null;
+            eval(`
+            if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
+            `);
+            if (category) {
+                setChoosedCategory(category);
+                return;
+            }
         }
 
         setLoading(true);
@@ -50,10 +53,10 @@ function useUpdateCatalog(
             if (data) {
                 if (reachedPage === 1) {
                     setItems(data.products);
-                    
-                   if (!categories.length) {
-                    setCategories(data.categories);
-                   }
+
+                    if (!categories.length) {
+                        setCategories(data.categories);
+                    }
                 } else {
                     setItems(items.concat(data.products));
                 }
@@ -63,30 +66,25 @@ function useUpdateCatalog(
         }
     };
     useEffect(() => {
-        if (choosedCategory) return
+        if (choosedCategory) return;
         mainHandler();
     }, [reachedPage, searchKey, gender]);
 
     useEffect(() => {
         const func = async () => {
             if (!choosedCategory) {
-                setCategories(categories.map((v) => {
-                    return {
-                        ...v,
-                        children: undefined
-                    }
-                }))
-                mainHandler()
-                return
-            }
-            if (
-                !(
-                    choosedCategory &&
-                    items &&
-                    categories
-                )
-            )
+                setCategories(
+                    categories.map((v) => {
+                        return {
+                            ...v,
+                            children: undefined,
+                        };
+                    })
+                );
+                mainHandler();
                 return;
+            }
+            if (!(choosedCategory && items && categories)) return;
             setLoading(true);
             let data;
             if (searchKey) {
@@ -108,7 +106,7 @@ function useUpdateCatalog(
                     );
                     if (choosedCategoryData) {
                         choosedCategoryData.children = data.categories;
-                        const newCategories = categories.map((v) => ({...v}))
+                        const newCategories = categories.map((v) => ({ ...v }));
                         setCategories(newCategories);
                     }
                 }
@@ -119,7 +117,6 @@ function useUpdateCatalog(
         };
         func();
     }, [choosedCategory]);
-
 }
 
 export default useUpdateCatalog;
