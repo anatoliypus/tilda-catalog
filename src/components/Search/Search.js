@@ -34,13 +34,6 @@ function Search({ setSearchKey, searchKey }) {
     setShouldUseKey(shouldUseKey)
     setShouldUseCategory(shouldUseCategory)
 
-    // if (shouldUseKey) {
-    //   setSearchKey(queryKey)
-    // } else if (shouldUseCategory) {
-    //   setSearchKey(categoryKey)
-    // } else {
-    //   setSearchKey("sneakers")
-    // }
   }, [])
 
   useEffect(() => {
@@ -57,7 +50,7 @@ function Search({ setSearchKey, searchKey }) {
         setSearchKey(link.value);
         addParam(link.value)
       } else {
-        // setSearchKey("sneakers");
+        setSearchKey(null);
       }
     }
   };
@@ -71,7 +64,7 @@ function Search({ setSearchKey, searchKey }) {
         setSearchKey(link.value);
         addParam(link.value)
       } else {
-        // setSearchKey("sneakers");
+        setSearchKey(null);
       }
       e.target.blur();
     }

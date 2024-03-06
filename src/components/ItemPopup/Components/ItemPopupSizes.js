@@ -13,7 +13,7 @@ function ItemPopupSizes({hidden, prices, choosedSize, setChoosedSize}) {
     <div className={styles.itemPopupSizes}>
       {!hidden &&
         prices &&
-        Object.keys(prices).map((size, index) => {
+        Object.keys(prices).sort().map((size, index) => {
           const price = prices[size]
           if (size && price) {
             return (

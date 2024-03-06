@@ -23,21 +23,6 @@ function Catalog() {
     const [choosedCategory, setChoosedCategory] = useState(null);
     const categoriesRef = useRef(null);
 
-    useUpdateCatalog(
-        setLoading,
-        reachedPage,
-        setReachedPageIsLast,
-        setReachedPage,
-        setItems,
-        searchKey,
-        items,
-        gender,
-        categories,
-        setCategories,
-        choosedCategory,
-        setChoosedCategory
-    );
-
     useEffect(() => {
         const searchParams = new URL(window.location.href).searchParams;
         const id = searchParams.get("productId");
@@ -60,6 +45,21 @@ function Catalog() {
                 else v.style.overflowX = "scroll";
             });
     }, [categories]);
+
+    useUpdateCatalog(
+        setLoading,
+        reachedPage,
+        setReachedPageIsLast,
+        setReachedPage,
+        setItems,
+        searchKey,
+        items,
+        gender,
+        categories,
+        setCategories,
+        choosedCategory,
+        setChoosedCategory
+    );
 
     const shouldShowLoading = loading && reachedPage === 1;
     useSetLoadingHeight(shouldShowLoading, loadingBlockRef);
