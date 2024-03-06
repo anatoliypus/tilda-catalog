@@ -109,6 +109,8 @@ function useUpdateCatalog(
                         const newCategories = categories.map((v) => ({ ...v }));
                         setCategories(newCategories);
                     }
+                } else if (data.categories && data.categories.length == 0) {
+                    setCategories(data.categories)
                 }
 
                 setLoading(false);
