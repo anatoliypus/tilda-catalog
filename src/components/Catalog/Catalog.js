@@ -86,6 +86,10 @@ function Catalog() {
                         setSearchKey(key);
                         setReachedPage(1);
                     }}
+                    setChoosedCategory={(id) => {
+                        setChoosedCategory(id);
+                        setReachedPage(1);
+                    }}
                     searchKey={searchKey}
                 />
             )}
@@ -106,6 +110,14 @@ function Catalog() {
                 }}
                 hidden={choosedItem == null}
             />
+            {choosedCategory != null && (
+                <button onClick={() => {
+                    setChoosedCategory(null)
+                    setReachedPage(1)
+                }} className={styles.clearCategory}>
+                    Сброс категории
+                </button>
+            )}
             <div className={styles.catalog}>
                 {shouldShowCategoriesFilter && (
                     <Categories

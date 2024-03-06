@@ -73,6 +73,11 @@ export async function getPrice(priceYuan) {
     return data;
 }
 
+export async function getHints(key) {
+    const data = await makeRequest(`${baseUrl}/hints?key=${key}`);
+    return data;
+}
+
 export function useGetProductInfo(product, setData) {
     useEffect(() => {
         const handler = async () => {
