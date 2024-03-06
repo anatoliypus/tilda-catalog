@@ -65,8 +65,8 @@ function useUpdateCatalog(
             }
         }
     };
+
     useEffect(() => {
-        if (choosedCategory) return;
         mainHandler();
     }, [reachedPage, searchKey, gender]);
 
