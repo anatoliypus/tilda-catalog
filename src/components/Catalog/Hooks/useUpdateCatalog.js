@@ -15,7 +15,8 @@ function useUpdateCatalog(
     categories,
     setCategories,
     choosedCategory,
-    setChoosedCategory
+    setChoosedCategory,
+    shouldShowCategoriesFilter
 ) {
     let [checkedVars, setCheckedVars] = useState(false);
 
@@ -26,7 +27,7 @@ function useUpdateCatalog(
             eval(`
             if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
             `);
-            if (category) {
+            if (category && shouldShowCategoriesFilter) {
                 const data = await getCatalog(reachedPage, genders.all);
                 setCategories(data.categories);
                 setChoosedCategory(category);
@@ -52,12 +53,12 @@ function useUpdateCatalog(
                 setReachedPageIsLast(false);
             }
         } else {
-            const data = await getCatalog(reachedPage, gender, choosedCategory);
+            const data = await getCatalog(reachedPage, gender, choosedCategory, shouldShowCategoriesFilter);
             if (data) {
                 if (reachedPage === 1) {
                     setItems(data.products);
 
-                    if (!categories.length) {
+                    if (!categories.length && shouldShowCategoriesFilter) {
                         setCategories(data.categories);
                     }
                 } else {

@@ -48,21 +48,6 @@ function Catalog() {
             });
     }, [categories]);
 
-    useUpdateCatalog(
-        setLoading,
-        reachedPage,
-        setReachedPageIsLast,
-        setReachedPage,
-        setItems,
-        searchKey,
-        items,
-        gender,
-        categories,
-        setCategories,
-        choosedCategory,
-        setChoosedCategory
-    );
-
     const shouldShowLoading = loading && reachedPage === 1;
     useSetLoadingHeight(shouldShowLoading, loadingBlockRef);
 
@@ -80,6 +65,22 @@ function Catalog() {
     eval(`
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "categoriesFilters" in CATALOG_PARAMS) shouldShowCategoriesFilter = CATALOG_PARAMS.categoriesFilters
   `);
+
+  useUpdateCatalog(
+    setLoading,
+    reachedPage,
+    setReachedPageIsLast,
+    setReachedPage,
+    setItems,
+    searchKey,
+    items,
+    gender,
+    categories,
+    setCategories,
+    choosedCategory,
+    setChoosedCategory,
+    shouldShowCategoriesFilter
+);
   
     return (
         <div ref={loadingBlockRef} className={styles.catalogMainBlock}>

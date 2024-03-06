@@ -23,36 +23,47 @@ async function makeRequest(url) {
     }
 }
 
-export async function searchItems(key, page, gender, category='') {
-    let pageSize = ''
+export async function searchItems(key, page, gender, category = "") {
+    let pageSize = "";
     eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "pageSize" in CATALOG_PARAMS) pageSize = CATALOG_PARAMS.pageSize
-    `)
+    `);
 
-    let brand = ''
+    let brand = "";
     eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "brand" in CATALOG_PARAMS) brand = CATALOG_PARAMS.brand
-    `)
+    `);
 
     const data = await makeRequest(
-        `${baseUrl}/search?key=${key}&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category ? category : ''}&brand=${brand}`
+        `${baseUrl}/search?key=${key}&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${
+            category ? category : ""
+        }&brand=${brand}`
     );
     return data;
 }
 
-export async function getCatalog(page, gender, category='') {
-    let pageSize = ''
+export async function getCatalog(
+    page,
+    gender,
+    category = "",
+    shouldShowCategoriesFilter = true
+) {
+    let pageSize = "";
     eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "pageSize" in CATALOG_PARAMS) pageSize = CATALOG_PARAMS.pageSize
-    `)
+    `);
 
-    let brand = ''
+    let brand = "";
     eval(`
         if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "brand" in CATALOG_PARAMS) brand = CATALOG_PARAMS.brand
-    `)
+    `);
 
     const data = await makeRequest(
-        `${baseUrl}/catalog?&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${category ? category : ''}&brand=${brand}`
+        `${baseUrl}/catalog?&page=${page}&gender=${gender}&pageSize=${pageSize}&category=${
+            category ? category : ""
+        }&brand=${brand}${
+            !shouldShowCategoriesFilter ? "&loadCategories=0" : ""
+        }`
     );
     return data;
 }
@@ -63,7 +74,9 @@ export async function getProductInfo(id) {
 }
 
 export async function getPrice(priceYuan) {
-    const data = await makeRequest(`${baseUrl}/calculatePrice?price=${priceYuan}`);
+    const data = await makeRequest(
+        `${baseUrl}/calculatePrice?price=${priceYuan}`
+    );
     return data;
 }
 
