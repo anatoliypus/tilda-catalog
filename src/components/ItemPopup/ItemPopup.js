@@ -56,7 +56,7 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
     const url = new URL(window.location)
     url.searchParams.has('productId') && url.searchParams.delete('productId')
     prevSearch && url.searchParams.set('key', prevSearch)
-    window.history.replaceState({}, '', url)
+    // window.history.replaceState({}, '', url)
   };
 
   useEffect(() => {
@@ -69,11 +69,11 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
       }
       url.searchParams.set('productId', product.productId)
 
-      if (pushedAlready) {
-        window.history.replaceState({}, '', url)
-      } else {
-        window.history.pushState({}, '', url)
-      }
+      // if (pushedAlready) {
+      //   window.history.replaceState({}, '', url)
+      // } else {
+      //   window.history.pushState({}, '', url)
+      // }
     }
   }, [data, product, hidden])
 
