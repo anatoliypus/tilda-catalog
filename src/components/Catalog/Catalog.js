@@ -66,22 +66,22 @@ function Catalog() {
     if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "categoriesFilters" in CATALOG_PARAMS) shouldShowCategoriesFilter = CATALOG_PARAMS.categoriesFilters
   `);
 
-  useUpdateCatalog(
-    setLoading,
-    reachedPage,
-    setReachedPageIsLast,
-    setReachedPage,
-    setItems,
-    searchKey,
-    items,
-    gender,
-    categories,
-    setCategories,
-    choosedCategory,
-    setChoosedCategory,
-    shouldShowCategoriesFilter
-);
-  
+    useUpdateCatalog(
+        setLoading,
+        reachedPage,
+        setReachedPageIsLast,
+        setReachedPage,
+        setItems,
+        searchKey,
+        items,
+        gender,
+        categories,
+        setCategories,
+        choosedCategory,
+        setChoosedCategory,
+        shouldShowCategoriesFilter
+    );
+
     return (
         <div ref={loadingBlockRef} className={styles.catalogMainBlock}>
             {shouldShowSearch && (
@@ -162,6 +162,8 @@ function Catalog() {
                             })}
                         </div>
                     )}
+
+                    {!shouldShowLoading && items && items.length == 0 && <p>По вашему запросу ничего не найдено. <br />Если вы ищите товары по запросу на русском языке, пожалуйста, воспользуйтесь поисковыми подсказками по категориям.</p>}
                     {!shouldShowLoading && (
                         <LoadMore
                             show={!reachedPageIsLast && items}

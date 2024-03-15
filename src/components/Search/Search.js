@@ -27,7 +27,8 @@ function Search({ setSearchKey, searchKey, setChoosedCategory }) {
 
     const [shouldUseKey, setShouldUseKey] = useState(false);
     const [shouldUseCategory, setShouldUseCategory] = useState(false);
-    const [hints, setHints] = useState([]);
+    const [hints, setHints] = useState({hints: [], ts: Date.now()});
+    const [hintsLoading, setHintsLoading] = useState(false)
 
     useEffect(() => {
         const shouldUseKey = queryKey && queryKey.length && !categoryKey;
@@ -56,7 +57,7 @@ function Search({ setSearchKey, searchKey, setChoosedCategory }) {
                 setSearchKey(link.value);
                 addParam(link.value);
             } else {
-                setHints([]);
+                setHints({hints: [], ts: Date.now()});
                 setSearchKey(null);
             }
         }
@@ -68,6 +69,7 @@ function Search({ setSearchKey, searchKey, setChoosedCategory }) {
         if (timeout) clearTimeout(timeout);
 
         if (e.key == "Enter" || e.keyCode === 13) {
+            setHintsLoading(false)
             setShouldUseCategory(false);
             setShouldUseKey(false);
             const link = e.target;
@@ -75,20 +77,26 @@ function Search({ setSearchKey, searchKey, setChoosedCategory }) {
                 setSearchKey(link.value);
                 addParam(link.value);
             } else {
-                setHints([]);
+                setHints({hints: [], ts: Date.now()});
                 setSearchKey(null);
             }
             e.target.blur();
         } else {
+            setHintsLoading(true)
             timeout = setTimeout(async () => {
                 const key = e.target.value;
                 if (key) {
-                    const hints = await getHints(key);
-                    setHints(hints);
+                    const now = Date.now()
+                    const newHints = await getHints(key);
+                    setHintsLoading(false)
+                    if (!hints || hints.ts < now) {
+                        setHints({hints: newHints, ts: Date.now()});
+                    }
                 } else {
-                  setHints([]);
+                    setHintsLoading(false)
+                    setHints({hints: [], ts: Date.now()});
                 }
-            }, 600);
+            }, 1000);
         }
     };
 
@@ -113,25 +121,42 @@ function Search({ setSearchKey, searchKey, setChoosedCategory }) {
                     onClick={clickHandler}
                 />
             </div>
-            {hints && hints.length > 0 && (
+            {inputRef && inputRef.current && inputRef.current === document.activeElement && inputRef.current.value.length > 0 && (
                 <div className={styles.searchHints}>
-                  {hints.sort((a, b) => {
-                    if (a.name.length > b.name.length) return 1
-                    if (a.name.length < b.name.length) return -1
-                    return 0
-                  }).map((hint, index) => {
-                    if (hint.type == 'category') {
-                      return <button onClick={() => {
-                        setChoosedCategory(hint.id)
-                        if (inputRef && inputRef.current) {
-                          inputRef.current.value = ''
-                        }
-                        setHints([])
-                      }} key={index} className={styles.hintButton}><span>Категория:</span> {hint.name.toLowerCase()}</button>
-                    } else {
-                      return null
-                    }
-                  })}
+                    {!hintsLoading && hints &&
+                        hints.hints.length > 0 &&
+                        hints.hints
+                            .sort((a, b) => {
+                                if (a.name.length > b.name.length) return 1;
+                                if (a.name.length < b.name.length) return -1;
+                                return 0;
+                            })
+                            .map((hint, index) => {
+                                if (hint.type == "category") {
+                                    return (
+                                        <button
+                                            onClick={() => {
+                                                setChoosedCategory(hint.id);
+                                                if (
+                                                    inputRef &&
+                                                    inputRef.current
+                                                ) {
+                                                    inputRef.current.value = "";
+                                                }
+                                                setHints({hints: [], ts: Date.now()});
+                                            }}
+                                            key={index}
+                                            className={styles.hintButton}
+                                        >
+                                            <span>Категория:</span>{" "}
+                                            {hint.name.toLowerCase()}
+                                        </button>
+                                    );
+                                } else {
+                                    return null;
+                                }
+                            })}
+                    {hintsLoading && <p>Загрузка...</p>}
                 </div>
             )}
             {shouldUseCategory && (
