@@ -75,6 +75,7 @@ function Search({ setSearchKey, searchKey, setChoosedCategory }) {
             const link = e.target;
             if (link.value) {
                 setSearchKey(link.value);
+                setChoosedCategory(null)
                 addParam(link.value);
             } else {
                 setHints({hints: [], ts: Date.now()});
@@ -137,6 +138,7 @@ function Search({ setSearchKey, searchKey, setChoosedCategory }) {
                                         <button
                                             onClick={() => {
                                                 setChoosedCategory(hint.id);
+                                                setSearchKey(null)
                                                 if (
                                                     inputRef &&
                                                     inputRef.current
