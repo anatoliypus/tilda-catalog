@@ -72,10 +72,8 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
       url.searchParams.set('productId', product.productId)
 
       if (pushedAlready) {
-        console.log('replace state')
-        window.history.replaceState({}, '', url)
+        // window.history.replaceState({}, '', url)
       } else {
-        console.log('push state')
         window.history.pushState({}, '', url)
       }
     }
