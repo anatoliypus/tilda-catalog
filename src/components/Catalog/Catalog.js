@@ -26,18 +26,6 @@ function Catalog() {
     const categoriesRef = useRef(null);
 
     useEffect(() => {
-        const searchParams = new URL(window.location.href).searchParams;
-        const id = searchParams.get("productId");
-        if (id) {
-            setChoosedItem({
-                productId: id,
-                title: null,
-                img: null,
-            });
-        }
-    }, []);
-
-    useEffect(() => {
         document
             .querySelectorAll(`.${styles.catalogCategories}`)
             .forEach((v) => {

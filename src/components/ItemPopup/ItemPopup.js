@@ -60,6 +60,18 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
   };
 
   useEffect(() => {
+    const searchParams = new URL(window.location.href).searchParams;
+    const id = searchParams.get("productId");
+    if (id) {
+        setProduct({
+            productId: id,
+            title: null,
+            img: null,
+        });
+    }
+}, []);
+
+  useEffect(() => {
     if (!hidden && data && product) {
       const url = new URL(window.location)
       const pushedAlready = url.searchParams.has('productId')
