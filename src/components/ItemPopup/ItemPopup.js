@@ -61,13 +61,7 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
 
   useEffect(() => {
     const popups = document.querySelectorAll('.itemPopup_common')
-    popups.length > 1 && popups.forEach((v) => {
-      const compStyles = window.getComputedStyle(v)
-      const visibility = compStyles.getPropertyValue('visibility')
-      if (visibility != 'hidden') {
-        return
-      }
-    })
+    if (popups.length > 1 && popupRef && popupRef.current && popups[0] != popupRef.current) return
 
     const searchParams = new URL(window.location.href).searchParams;
     const id = searchParams.get("productId");
