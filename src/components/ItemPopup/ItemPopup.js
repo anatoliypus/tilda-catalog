@@ -56,24 +56,26 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
     const url = new URL(window.location)
     url.searchParams.has('productId') && url.searchParams.delete('productId')
     prevSearch && url.searchParams.set('key', prevSearch)
-    // window.history.replaceState({}, '', url)
+    window.history.replaceState({}, '', url)
   };
 
   useEffect(() => {
     if (!hidden && data && product) {
       const url = new URL(window.location)
       const pushedAlready = url.searchParams.has('productId')
+
       if (url.searchParams.has('key')) {
         setPrevSearch(url.searchParams.get('key'))
         url.searchParams.delete('key')
       }
+
       url.searchParams.set('productId', product.productId)
 
-      // if (pushedAlready) {
-      //   window.history.replaceState({}, '', url)
-      // } else {
-      //   window.history.pushState({}, '', url)
-      // }
+      if (pushedAlready) {
+        window.history.replaceState({}, '', url)
+      } else {
+        window.history.pushState({}, '', url)
+      }
     }
   }, [data, product, hidden])
 
