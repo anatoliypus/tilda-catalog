@@ -60,6 +60,15 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
   };
 
   useEffect(() => {
+    const popups = document.querySelectorAll('.itemPopup_common')
+    popups.length > 1 && popups.forEach((v) => {
+      const compStyles = window.getComputedStyle(v)
+      const visibility = compStyles.getPropertyValue('visibility')
+      if (visibility != 'hidden') {
+        return
+      }
+    })
+
     const searchParams = new URL(window.location.href).searchParams;
     const id = searchParams.get("productId");
     if (id) {
@@ -118,7 +127,7 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
   if (loading || !data) {
     return (
       <div
-        className={`${styles.itemPopup} ${
+        className={`itemPopup_common ${styles.itemPopup} ${
           hidden ? styles.itemPopupHidden : ""
         } ${styles.ItemPopupCenter}`}
         ref={popupRef}
@@ -130,7 +139,7 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
   
   return (
     <div
-      className={`${styles.itemPopup} ${hidden ? styles.itemPopupHidden : ""}`}
+      className={`itemPopup_common ${styles.itemPopup} ${hidden ? styles.itemPopupHidden : ""}`}
       ref={popupRef}
     >
       <button className={styles.itemPopupClose} onClick={closePopupHandler}>
