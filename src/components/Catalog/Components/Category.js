@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { findNode } from "../../../utils/findNode";
 import styles from "../Catalog.module.css";
 import Categories from "./Categories";
@@ -12,10 +13,17 @@ function Category({
     node,
     choosedCategory
 }) {
+    const [active, setActive] = useState(false)
+
+    useEffect(() => {
+        if ((node.id == choosedCategory) != active) console.log('change in', node.id)
+        setActive(node.id == choosedCategory)
+    }, [categoriesRef, categories, node, choosedCategory])
+
     return (
         <>
             <button
-                className={`${styles.categoryButton} ${node.id == choosedCategory ? styles.categoryButtonActive: ''}`}
+                className={`${styles.categoryButton} ${active ? styles.categoryButtonActive: ''}`}
                 data-level={level}
                 data-id={node.id}
                 onClick={(e) => {
@@ -55,6 +63,7 @@ function Category({
                     setChoosedCategory={setChoosedCategory}
                     children={node.children}
                     setCategories={setCategories}
+                    choosedCategory={choosedCategory}
                 />
             )}
         </>

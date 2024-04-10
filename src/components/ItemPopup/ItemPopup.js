@@ -112,7 +112,7 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
 
   useEffect(() => {
     if (choosedSize) {
-      setPriceValue(<Price isMinimal={false} value={choosedSize.price} />)
+      setPriceValue(<Price isMinimal={false} product={choosedSize.price} />)
     }
   }, [choosedSize])
 
@@ -144,14 +144,15 @@ function ItemPopup({ product, closePopup, hidden, setProduct }) {
         <div className={styles.itemPopupMainBlock}>
           <Title title={hidden ? "" : data.title} className={styles.itemPopupHeading} />
           {priceValue}
-          <p className={styles.itemPopupSizesHeading}>Доступные размеры:</p>
           <ItemPopupSizes
+            data={data}
+            setPriceValue={setPriceValue}
             hidden={hidden}
             prices={data.apiPrices}
             choosedSize={choosedSize}
             setChoosedSize={setChoosedSize}
           />
-          <button className={`${styles.itemPopupAddToCart} ${!choosedSize ? styles.itemPopupAddToCartInactive : ''}`} ref={addToCartRef}>
+          <button className={`${styles.itemPopupAddToCart} ${(!choosedSize && data.apiPrices && (Object.keys(data.apiPrices).length != 0)) ? styles.itemPopupAddToCartInactive : ''}`} ref={addToCartRef}>
             Добавить в корзину
           </button>
           <p className={styles.itemPopupArticle}>Артикул: {data.vendorCode}</p>

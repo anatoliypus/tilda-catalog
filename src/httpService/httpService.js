@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-// export const baseUrl = "http://localhost:5555";
-export const baseUrl = "https://poizonapi.ru";
+export const baseUrl = "http://localhost:5555";
+// export const baseUrl = "https://poizonapi.ru";
 
 async function makeRequest(url) {
     let success = false;
@@ -70,6 +70,13 @@ export async function getCatalog(
 
 export async function getProductInfo(id) {
     const data = await makeRequest(`${baseUrl}/product?id=${id}`);
+    return data;
+}
+
+export async function getProductPriceRange(id) {
+    const data = await makeRequest(
+        `${baseUrl}/getProductPriceRange?id=${id}`
+    );
     return data;
 }
 

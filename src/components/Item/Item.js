@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import Price from "../Price/Price";
 import { Title } from "../Title/Title";
-import { getPrice } from "../../httpService/httpService";
 
 function Item({ product, setPopup }) {
     const itemRef = useRef(null);
@@ -34,7 +33,7 @@ function Item({ product, setPopup }) {
                 ></div>
             )}
             <Title title={product.title} className={styles.catalogItemTitle} />
-            <Price isMinimal={true} value={product.apiPrices} />
+            <Price isMinimal={true} product={product} />
         </div>
     );
 }

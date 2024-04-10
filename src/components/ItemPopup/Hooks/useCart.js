@@ -1,12 +1,12 @@
 import { useEffect } from "react";
+import getPriceFromProperties from "../../../utils/getPriceFromProperties";
 
 function useCart(choosedSize, product, addToCartRef, hidden, data) {
     useEffect(() => {
-        const handler = () => {
-            if (choosedSize && data) {
+        const handler = async () => {
+            if ((choosedSize || (data && (!data.apiPrices || Object.keys(data.apiPrices).length == 0))) && data) {
                 const p = {
-                    name: data.title.slice(0, 20) + "... | " + data.vendorCode + " | " + choosedSize.size,
-                    price: choosedSize.price,
+                    name: data.title.slice(0, 20) + "... | " + data.vendorCode + " | " + (choosedSize ? choosedSize.size : ''),
                     img: data.images[0],
                     recid: "709992588",
                     lid: "6144261803880",
@@ -19,7 +19,15 @@ function useCart(choosedSize, product, addToCartRef, hidden, data) {
                     gen_uid: "",
                     url: "https://poizontest.tilda.ws/",
                 };
-                eval("tcart__addProduct(p)");
+                if (choosedSize) p.price = choosedSize.price
+                else {
+                    const finalPriceRub = await getPriceFromProperties(data.properties)
+                    p.price = finalPriceRub
+                }
+                try {
+                    eval("tcart__addProduct(p)");
+                }
+                catch (e) {}
 
                 //       const code =
                 //           " \
@@ -30,7 +38,7 @@ function useCart(choosedSize, product, addToCartRef, hidden, data) {
                 //       eval(code);
             }
         };
-        if (choosedSize && addToCartRef.current && data) {
+        if ((choosedSize || (data && (!data.apiPrices || Object.keys(data.apiPrices).length == 0))) && addToCartRef.current && data) {
             addToCartRef.current.addEventListener("click", handler);
         } else if (addToCartRef.current) {
             addToCartRef.current.removeEventListener("click", handler);
@@ -40,7 +48,7 @@ function useCart(choosedSize, product, addToCartRef, hidden, data) {
                 addToCartRef.current.removeEventListener("click", handler);
             }
         };
-    }, [addToCartRef, hidden, choosedSize, data]);
+    }, [addToCartRef, addToCartRef.current, hidden, choosedSize, data, product]);
 }
 
 export default useCart;
