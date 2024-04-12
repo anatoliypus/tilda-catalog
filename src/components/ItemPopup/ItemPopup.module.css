@@ -94,6 +94,7 @@
     cursor: pointer;
     transition: background 0.2s;
     margin-right: 15px;
+    font-size: 14px;
 }
 
 .itemPopupGetSizes {
@@ -105,6 +106,8 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.2s;
+    color: #000;
+    font-size: 14px;
 }
 
 .itemPopupGetSizes:hover {
