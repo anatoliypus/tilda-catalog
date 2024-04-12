@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-export const baseUrl = "http://localhost:5555";
-// export const baseUrl = "https://poizonapi.ru";
+// export const baseUrl = "http://localhost:5555";
+export const baseUrl = "https://poizonapi.ru";
 
 async function makeRequest(url) {
     let success = false;
