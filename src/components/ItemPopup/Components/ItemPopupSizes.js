@@ -136,7 +136,7 @@ function ItemPopupSizes({
                         })}
                 {!hidden && !prices && <ItemPopupSizesLoader />}
             </div>
-            {!hidden && data.apiPricesUpdated && <p className={styles.itemPopupSizeUpdatedInfo}>Цены и размеры были обновлены {new Date(data.apiPricesUpdated).toLocaleString()}</p>}
+            {!hidden && data.apiPricesUpdated && <p className={styles.itemPopupSizeUpdatedInfo}>Цены и размеры были обновлены {new Date(data.apiPricesUpdated).toLocaleString()} (МСК)</p>}
         </>
     );
 }
