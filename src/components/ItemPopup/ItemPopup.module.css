@@ -84,8 +84,9 @@
 }
 
 .itemPopupAddToCart {
-    width: 150px;
-    height: 50px;
+    padding: 15px 20px;
+    width: fit-content;
+    height: fit-content;
     background-color: #000;
     color: #fff;
     font-weight: 600;
@@ -98,8 +99,9 @@
 }
 
 .itemPopupGetSizes {
-    width: 200px;
-    height: 50px;
+    padding: 15px 20px;
+    width: fit-content;
+    height: fit-content;
     background-color: #fff;
     border: 1px solid #000;
     font-weight: 600;
