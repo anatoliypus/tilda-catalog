@@ -110,7 +110,8 @@
     transition: background 0.2s;
     color: #000;
     font-size: 14px;
-    max-width: 250px;
+    max-width: 220px;
+    box-sizing: border-box;
 }
 
 .itemPopupGetSizes:hover {
