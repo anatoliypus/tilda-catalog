@@ -6,7 +6,7 @@ function useCart(choosedSize, product, addToCartRef, hidden, data) {
         const handler = async () => {
             if ((choosedSize || (data && (!data.apiPrices || Object.keys(data.apiPrices).length == 0))) && data) {
                 const p = {
-                    name: data.title.slice(0, 20) + "... | " + data.vendorCode + " | " + (choosedSize ? choosedSize.size : ''),
+                    name: data.title.slice(0, 20) + "... | " + data.vendorCode + (choosedSize ? " | " + choosedSize.size : ''),
                     img: data.images[0],
                     recid: "709992588",
                     lid: "6144261803880",

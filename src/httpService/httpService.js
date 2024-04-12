@@ -80,6 +80,13 @@ export async function getProductPriceRange(id) {
     return data;
 }
 
+export async function getProductPrice(id) {
+    const data = await makeRequest(
+        `${baseUrl}/getPriceById?id=${id}`
+    );
+    return data;
+}
+
 export async function getPrice(priceYuan) {
     const data = await makeRequest(
         `${baseUrl}/calculatePrice?price=${priceYuan}`
