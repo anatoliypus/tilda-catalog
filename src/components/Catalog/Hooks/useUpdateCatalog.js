@@ -20,6 +20,19 @@ function useUpdateCatalog(
 ) {
     let [checkedVars, setCheckedVars] = useState(false);
 
+    const setCategoriesHandler = (cats, newCats, choosedCategory) => {
+        if (cats.length == 0) {
+            setCategories(newCats);
+            return;
+        }
+        const choosedCategoryData = findNode(choosedCategory, cats);
+        if (choosedCategoryData) {
+            choosedCategoryData.children = newCats;
+            const newCategories = cats.map((v) => ({ ...v }));
+            setCategories(newCategories);
+        }
+    };
+
     const mainHandler = async () => {
         if (!checkedVars) {
             setCheckedVars(true);
@@ -27,11 +40,16 @@ function useUpdateCatalog(
             eval(`
             if (typeof CATALOG_PARAMS !== 'undefined' && CATALOG_PARAMS && "category" in CATALOG_PARAMS) category = CATALOG_PARAMS.category
             `);
-            if (category) {
-                if (shouldShowCategoriesFilter) {
-                    const data = await getCatalog(reachedPage, genders.all);
-                    setCategories(data.categories);
+            if (!category) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const categoryURL = urlParams.get("category");
+                if (/^[0-9]+[.]{0,1}[0-9]*$/.test(categoryURL)) {
+                    category = parseInt(categoryURL);
                 }
+            }
+            if (category) {
+                const initialData = await getCatalog(reachedPage, genders.all);
+                setCategories(initialData.categories);
                 setChoosedCategory(category);
                 return;
             }
@@ -55,14 +73,21 @@ function useUpdateCatalog(
                 setReachedPageIsLast(false);
             }
         } else {
-            const data = await getCatalog(reachedPage, gender, choosedCategory, shouldShowCategoriesFilter);
+            const data = await getCatalog(
+                reachedPage,
+                gender,
+                choosedCategory,
+                shouldShowCategoriesFilter
+            );
             if (data) {
                 if (reachedPage === 1) {
                     setItems(data.products);
 
-                    if (!categories.length && shouldShowCategoriesFilter) {
-                        setCategories(data.categories);
-                    }
+                    setCategoriesHandler(
+                        categories,
+                        data.categories,
+                        choosedCategory
+                    );
                 } else {
                     setItems(items.concat(data.products));
                 }
@@ -74,55 +99,7 @@ function useUpdateCatalog(
 
     useEffect(() => {
         mainHandler();
-    }, [reachedPage, searchKey, gender]);
-
-    useEffect(() => {
-        const func = async () => {
-            if (!choosedCategory) {
-                setCategories(
-                    categories.map((v) => {
-                        return {
-                            ...v,
-                            children: undefined,
-                        };
-                    })
-                );
-                mainHandler();
-                return;
-            }
-            if (!(choosedCategory && items && categories)) return;
-            setLoading(true);
-            let data;
-            if (searchKey) {
-                data = await searchItems(
-                    searchKey,
-                    reachedPage,
-                    gender,
-                    choosedCategory
-                );
-            } else {
-                data = await getCatalog(reachedPage, gender, choosedCategory, shouldShowCategoriesFilter);
-            }
-            if (data) {
-                setItems(data.products);
-                if (data.categories && data.categories.length) {
-                    const choosedCategoryData = findNode(
-                        choosedCategory,
-                        categories
-                    );
-                    if (choosedCategoryData) {
-                        choosedCategoryData.children = data.categories;
-                        const newCategories = categories.map((v) => ({ ...v }));
-                        setCategories(newCategories);
-                    }
-                }
-
-                setLoading(false);
-                setReachedPageIsLast(false);
-            }
-        };
-        func();
-    }, [choosedCategory]);
+    }, [reachedPage, searchKey, gender, choosedCategory]);
 }
 
 export default useUpdateCatalog;
